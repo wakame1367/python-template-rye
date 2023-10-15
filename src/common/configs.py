@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 from pydantic import BaseSettings
@@ -12,12 +11,8 @@ class Configs(BaseSettings):
 
     ENV: str
     VERSION: str = "0.0.1"
-    SRC_DIR_PATH: str = os.path.join(
-        Path(__file__).parent.parent.absolute()
-    )  # srcディレクトリの絶対パス
-    LOGGER_CONFIG_PATH: str = os.path.join(
-        SRC_DIR_PATH, "logger_config.yaml"
-    )  # loggerの設定ファイルのパス
+    SRC_DIR_PATH: Path = Path(__file__).parent.parent.resolve()  # srcディレクトリの絶対パス
+    LOGGER_CONFIG_PATH: Path = SRC_DIR_PATH / "logger_config.yaml"  # loggerの設定ファイルのパス
 
     class Config:
         # .envファイルを読み込む
